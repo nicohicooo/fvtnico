@@ -74,7 +74,7 @@
   <button class="boton-cambio" onclick="cambiarImagen('imagen3')">Mostrar Imagen 3</button>
 
   <div id="contenedor">
-    <img id="imagenActual" src="imagenes/imagen1.jpg.png" alt="Imagen Inicial">
+    <img id="imagenActual" src="imagen1.jpg.png" alt="Imagen Inicial">
 
     <!-- Botones de opciones que aparecen tras cambiar imagen -->
     <div class="opciones" id="opciones">
@@ -94,7 +94,7 @@
 
     function cambiarImagen(nombre) {
       // Cambiar imagen
-      document.getElementById('imagenActual').src = 'imagenes/' + nombre + '.png';
+      document.getElementById('imagenActual').src = nombre + '.png';
       imagenActual = nombre;
 
       // Mostrar las opciones
@@ -115,7 +115,7 @@
 
         // Mostrar imagen4 después de un momento
         setTimeout(() => {
-          document.getElementById('imagenActual').src = 'imagenes/imagen4.jpg';
+          document.getElementById('imagenActual').src = imagen4.jpg';
           document.getElementById('opciones').style.display = 'none'; // Ocultar botones
         }, 1500);
 
