@@ -68,6 +68,7 @@
       pointer-events: none;
       z-index: 9999;
       display: none;
+      background: transparent;
     }
   </style>
 </head>
@@ -95,7 +96,8 @@
   let imagenActual = 'imagen1';
 
   function cambiarImagen(nombre) {
-    document.getElementById('imagenActual').src = nombre + '.png';
+    let src = nombre === 'imagen2' ? 'imagen2.png' : 'Imagen3.png';
+    document.getElementById('imagenActual').src = src;
     imagenActual = nombre;
 
     // Ocultar los botones de cambio
@@ -120,7 +122,7 @@
       lanzarFuegos();
 
       setTimeout(() => {
-        document.getElementById('imagenActual').src = 'imagen4.png';
+        document.getElementById('imagenActual').src = 'imagen4.jpg';
         document.getElementById('opciones').style.display = 'none';
       }, 1500);
     } else {
@@ -151,8 +153,7 @@
     }
 
     function animate() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((p, i) => {
         p.x += p.speedX;
         p.y += p.speedY;
