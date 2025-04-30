@@ -76,7 +76,7 @@
 <h1>Selecciona una imagen</h1>
 
 <div id="contenedor">
-  <img id="imagenActual" src="imagen1.png" alt="Imagen Inicial">
+  <img id="imagenActual" src="imagen1.jpg.png" alt="Imagen Inicial">
 
   <button id="boton2" class="boton-cambio" onclick="cambiarImagen('imagen2')">Mostrar Imagen 2</button>
   <button id="boton3" class="boton-cambio" onclick="cambiarImagen('imagen3')">Mostrar Imagen 3</button>
@@ -98,6 +98,11 @@
     document.getElementById('imagenActual').src = nombre + '.png';
     imagenActual = nombre;
 
+    // Ocultar los botones de cambio
+    document.getElementById('boton2').style.display = 'none';
+    document.getElementById('boton3').style.display = 'none';
+
+    // Mostrar opciones solo si es imagen2 o imagen3
     if (nombre === 'imagen2' || nombre === 'imagen3') {
       document.getElementById('opciones').style.display = 'block';
     }
