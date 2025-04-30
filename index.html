@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Juego de Imágenes</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #f5f5f5;
+    }
+
+    #contenedor {
+      margin-top: 50px;
+      position: relative;
+      display: inline-block;
+    }
+
+    #imagenActual {
+      width: 500px;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .boton-cambio {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    .opciones {
+      margin-top: 20px;
+      display: none; /* Oculto inicialmente */
+    }
+
+    .opciones button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .incorrecto {
+      color: red;
+      font-weight: bold;
+    }
+
+    #mensajeFinal {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: green;
+    }
+
+    /* Fuegos artificiales */
+    #fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Selecciona una imagen</h1>
+  
+  <button class="boton-cambio" onclick="cambiarImagen('imagen2')">Mostrar Imagen 2</button>
+  <button class="boton-cambio" onclick="cambiarImagen('imagen3')">Mostrar Imagen 3</button>
+
+  <div id="contenedor">
+    <img id="imagenActual" src="imagenes/imagen1.jpg" alt="Imagen Inicial">
+
+    <!-- Botones de opciones que aparecen tras cambiar imagen -->
+    <div class="opciones" id="opciones">
+      <button onclick="seleccionar(1)">Opción 1</button>
+      <button onclick="seleccionar(2)">Opción 2</button>
+      <button onclick="seleccionar(3)">Opción 3</button>
+    </div>
+  </div>
+
+  <div id="mensajeFinal"></div>
+
+  <!-- Canvas para fuegos artificiales -->
+  <canvas id="fireworks"></canvas>
+
+  <script>
+    let imagenActual = 'imagen1';
+
+    function cambiarImagen(nombre) {
+      // Cambiar imagen
+      document.getElementById('imagenActual').src = 'imagenes/' + nombre + '.jpg';
+      imagenActual = nombre;
+
+      // Mostrar las opciones
+      document.getElementById('opciones').style.display = 'block';
+      document.getElementById('mensajeFinal').textContent = '';
+    }
+
+    function seleccionar(opcion) {
+      const mensaje = document.getElementById('mensajeFinal');
+
+      if (opcion === 2) {
+        // Correcto
+        mensaje.textContent = '¡Correcto!';
+        mensaje.style.color = 'green';
+
+        // Lanzar fuegos artificiales
+        lanzarFuegos();
+
+        // Mostrar imagen4 después de un momento
+        setTimeout(() => {
+          document.getElementById('imagenActual').src = 'imagenes/imagen4.jpg';
+          document.getElementById('opciones').style.display = 'none'; // Ocultar botones
+        }, 1500);
+
+      } else {
+        // Incorrecto
+        mensaje.textContent = 'Incorrecto. Inténtalo de nuevo.';
+        mensaje.style.color = 'red';
+      }
+    }
+
+    // Función de fuegos artificiales
+    function lanzarFuegos() {
+      const canvas = document.getElementById("fireworks");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.display = "block";
+
+      let particles = [];
+
+      function createParticle() {
+        return {
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height / 2,
+          radius: Math.random() * 3 + 1,
+          color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+          speedX: (Math.random() - 0.5) * 4,
+          speedY: (Math.random() - 0.5) * 4,
+          alpha: 1
+        };
+      }
+
+      function animate() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, i) => {
+          p.x += p.speedX;
+          p.y += p.speedY;
+          p.alpha -= 0.01;
+          ctx.globalAlpha = p.alpha;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          if (p.alpha <= 0) particles.splice(i, 1);
+        });
+        ctx.globalAlpha = 1;
+        if (particles.length > 0) requestAnimationFrame(animate);
+        else canvas.style.display = "none";
+      }
+
+      for (let i = 0; i < 100; i++) {
+        particles.push(createParticle());
+      }
+
+      animate();
+    }
+  </script>
+</body>
+</html>
