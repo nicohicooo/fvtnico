@@ -21,17 +21,28 @@
       width: 500px;
       height: auto;
       border-radius: 10px;
+      display: block;
     }
 
     .boton-cambio {
-      margin: 10px;
+      position: absolute;
+      top: 10px;
       padding: 10px 20px;
       font-size: 16px;
+      z-index: 2;
+    }
+
+    #boton2 {
+      left: 10px;
+    }
+
+    #boton3 {
+      right: 10px;
     }
 
     .opciones {
       margin-top: 20px;
-      display: none; /* Oculto inicialmente */
+      display: none;
     }
 
     .opciones button {
@@ -41,11 +52,6 @@
       cursor: pointer;
     }
 
-    .incorrecto {
-      color: red;
-      font-weight: bold;
-    }
-
     #mensajeFinal {
       margin-top: 20px;
       font-size: 20px;
@@ -53,7 +59,6 @@
       color: green;
     }
 
-    /* Fuegos artificiales */
     #fireworks {
       position: fixed;
       top: 0;
@@ -68,111 +73,104 @@
 </head>
 <body>
 
-  <h1>Selecciona una imagen</h1>
-  
-  <button class="boton-cambio" onclick="cambiarImagen('imagen2')">Mostrar Imagen 2</button>
-  <button class="boton-cambio" onclick="cambiarImagen('imagen3')">Mostrar Imagen 3</button>
+<h1>Selecciona una imagen</h1>
 
-  <div id="contenedor">
-    <img id="imagenActual" src="imagen1.jpg.png" alt="Imagen Inicial">
+<div id="contenedor">
+  <img id="imagenActual" src="imagen1.png" alt="Imagen Inicial">
 
-    <!-- Botones de opciones que aparecen tras cambiar imagen -->
-    <div class="opciones" id="opciones">
-      <button onclick="seleccionar(1)">Opción 1</button>
-      <button onclick="seleccionar(2)">Opción 2</button>
-      <button onclick="seleccionar(3)">Opción 3</button>
-    </div>
+  <button id="boton2" class="boton-cambio" onclick="cambiarImagen('imagen2')">Mostrar Imagen 2</button>
+  <button id="boton3" class="boton-cambio" onclick="cambiarImagen('imagen3')">Mostrar Imagen 3</button>
+
+  <div class="opciones" id="opciones">
+    <button onclick="seleccionar(1)">Opción 1</button>
+    <button onclick="seleccionar(2)">Opción 2</button>
+    <button onclick="seleccionar(3)">Opción 3</button>
   </div>
+</div>
 
-  <div id="mensajeFinal"></div>
+<div id="mensajeFinal"></div>
+<canvas id="fireworks"></canvas>
 
-  <!-- Canvas para fuegos artificiales -->
-  <canvas id="fireworks"></canvas>
+<script>
+  let imagenActual = 'imagen1';
 
-  <script>
-    let imagenActual = 'imagen1';
+  function cambiarImagen(nombre) {
+    document.getElementById('imagenActual').src = nombre + '.png';
+    imagenActual = nombre;
 
-    function cambiarImagen(nombre) {
-      // Cambiar imagen
-      document.getElementById('imagenActual').src = nombre + '.png';
-      imagenActual = nombre;
-
-      // Mostrar las opciones
+    if (nombre === 'imagen2' || nombre === 'imagen3') {
       document.getElementById('opciones').style.display = 'block';
-      document.getElementById('mensajeFinal').textContent = '';
     }
 
-    function seleccionar(opcion) {
-      const mensaje = document.getElementById('mensajeFinal');
+    document.getElementById('mensajeFinal').textContent = '';
+  }
 
-      if (opcion === 2) {
-        // Correcto
-        mensaje.textContent = '¡Correcto!';
-        mensaje.style.color = 'green';
+  function seleccionar(opcion) {
+    const mensaje = document.getElementById('mensajeFinal');
 
-        // Lanzar fuegos artificiales
-        lanzarFuegos();
+    if (opcion === 2) {
+      mensaje.textContent = '¡Correcto!';
+      mensaje.style.color = 'green';
 
-        // Mostrar imagen4 después de un momento
-        setTimeout(() => {
-          document.getElementById('imagenActual').src = imagen4.jpg';
-          document.getElementById('opciones').style.display = 'none'; // Ocultar botones
-        }, 1500);
+      lanzarFuegos();
 
-      } else {
-        // Incorrecto
-        mensaje.textContent = 'Incorrecto. Inténtalo de nuevo.';
-        mensaje.style.color = 'red';
-      }
+      setTimeout(() => {
+        document.getElementById('imagenActual').src = 'imagen4.png';
+        document.getElementById('opciones').style.display = 'none';
+      }, 1500);
+    } else {
+      mensaje.textContent = 'Incorrecto. Inténtalo de nuevo.';
+      mensaje.style.color = 'red';
+    }
+  }
+
+  function lanzarFuegos() {
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.display = "block";
+
+    let particles = [];
+
+    function createParticle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height / 2,
+        radius: Math.random() * 3 + 1,
+        color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+        speedX: (Math.random() - 0.5) * 4,
+        speedY: (Math.random() - 0.5) * 4,
+        alpha: 1
+      };
     }
 
-    // Función de fuegos artificiales
-    function lanzarFuegos() {
-      const canvas = document.getElementById("fireworks");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      canvas.style.display = "block";
-
-      let particles = [];
-
-      function createParticle() {
-        return {
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height / 2,
-          radius: Math.random() * 3 + 1,
-          color: `hsl(${Math.random() * 360}, 100%, 50%)`,
-          speedX: (Math.random() - 0.5) * 4,
-          speedY: (Math.random() - 0.5) * 4,
-          alpha: 1
-        };
-      }
-
-      function animate() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        particles.forEach((p, i) => {
-          p.x += p.speedX;
-          p.y += p.speedY;
-          p.alpha -= 0.01;
-          ctx.globalAlpha = p.alpha;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-          if (p.alpha <= 0) particles.splice(i, 1);
-        });
-        ctx.globalAlpha = 1;
-        if (particles.length > 0) requestAnimationFrame(animate);
-        else canvas.style.display = "none";
-      }
-
-      for (let i = 0; i < 100; i++) {
-        particles.push(createParticle());
-      }
-
-      animate();
+    function animate() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.alpha -= 0.01;
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        if (p.alpha <= 0) particles.splice(i, 1);
+      });
+      ctx.globalAlpha = 1;
+      if (particles.length > 0) requestAnimationFrame(animate);
+      else canvas.style.display = "none";
     }
-  </script>
+
+    for (let i = 0; i < 100; i++) {
+      particles.push(createParticle());
+    }
+
+    animate();
+  }
+</script>
+
 </body>
 </html>
