@@ -13,20 +13,10 @@
       padding: 0;
     }
 
-    <audio id="musicaVictoria">
-      <source src="You Won! Congratulations! - Mario Party 10 OST.mp3" type="audio/mpeg">
-      Tu navegador no soporta audio HTML5.
-    </audio>
-    
-
     h1 {
       font-size: 1.5rem;
       padding: 10px;
-      margin-bottom: 10px; /* Reduce la separación inferior del título */
-    }
-    
-    #contenedor {
-      margin-top: 10px; /* Reduce el espacio superior del contenedor de la imagen */
+      margin-bottom: 10px;
     }
 
     #contenedor {
@@ -46,7 +36,7 @@
 
     .boton-cambio {
       position: absolute;
-      bottom: 10px; /* Alinea los botones en la parte inferior */
+      bottom: 10px;
       padding: 16px 32px;
       font-size: 20px;
       z-index: 2;
@@ -62,25 +52,24 @@
     }
 
     #boton2 {
-      left: 10%; /* Ajusta la posición horizontal del botón "Siii!" */
+      left: 10%;
     }
-    
+
     #boton3 {
-      right: 10%; /* Ajusta la posición horizontal del botón "Nah" */
+      right: 10%;
     }
-    
-    /* CSS responsivo para pantallas pequeñas */
+
     @media (max-width: 600px) {
       .boton-cambio {
-        position: static; /* Quita la posición absoluta en móviles */
-        margin: 10px auto; /* Espacio entre botones y centrado automático */
-        display: block; /* Pone los botones uno debajo del otro */
-        width: 80%; /* Anchura del botón en relación al contenedor */
+        position: static;
+        margin: 10px auto;
+        display: block;
+        width: 80%;
       }
-    
+
       #boton2, #boton3 {
-        left: auto; /* Resetea la posición a la izquierda */
-        right: auto; /* Resetea la posición a la derecha */
+        left: auto;
+        right: auto;
       }
     }
 
@@ -144,6 +133,11 @@
 <div id="mensajeFinal"></div>
 <canvas id="fireworks"></canvas>
 
+<audio id="musicaVictoria">
+  <source src="You Won! Congratulations! - Mario Party 10 OST.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio HTML5.
+</audio>
+
 <script>
   let imagenActual = 'imagen1';
 
@@ -176,7 +170,7 @@
       lanzarFuegos();
 
       setTimeout(() => {
-        document.getElementById('imagenActual').src = 'imagen4.png';
+        document.getElementById('imagenActual').src = 'imagen4.jpg';
         document.getElementById('opciones').style.display = 'none';
       }, 1500);
     } else {
