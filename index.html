@@ -13,6 +13,12 @@
       padding: 0;
     }
 
+    <audio id="musicaVictoria">
+      <source src="You Won! Congratulations! - Mario Party 10 OST.mp3" type="audio/mpeg">
+      Tu navegador no soporta audio HTML5.
+    </audio>
+    
+
     h1 {
       font-size: 1.5rem;
       padding: 10px;
@@ -162,6 +168,10 @@
     if (opcion === 2) {
       mensaje.textContent = '¡Correcto!';
       mensaje.style.color = 'green';
+
+      // Reproducir la música de victoria
+      const audio = document.getElementById('musicaVictoria');
+      audio.play();
 
       lanzarFuegos();
 
