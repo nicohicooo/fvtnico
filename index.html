@@ -45,14 +45,28 @@
       background-color: #45a049;
     }
 
+    /* Posicionamiento inicial */
     #boton2 {
-      left: 30%; /* Ajusta la posición horizontal del botón "Siii!" */
-      margin-right: 10px; /* Espacio adicional hacia la derecha */
+      left: 25%; /* Ajusta la posición horizontal del botón "Siii!" */
     }
     
     #boton3 {
-      right: 30%; /* Ajusta la posición horizontal del botón "Nah" */
-      margin-left: 10px; /* Espacio adicional hacia la izquierda */
+      right: 25%; /* Ajusta la posición horizontal del botón "Nah" */
+    }
+    
+    /* CSS responsivo para pantallas pequeñas */
+    @media (max-width: 600px) {
+      .boton-cambio {
+        position: static; /* Quita la posición absoluta en móviles */
+        margin: 10px auto; /* Espacio entre botones y centrado automático */
+        display: block; /* Pone los botones uno debajo del otro */
+        width: 80%; /* Anchura del botón en relación al contenedor */
+      }
+    
+      #boton2, #boton3 {
+        left: auto; /* Resetea la posición a la izquierda */
+        right: auto; /* Resetea la posición a la derecha */
+      }
     }
 
     .opciones {
