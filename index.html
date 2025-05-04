@@ -13,6 +13,16 @@
       padding: 0;
     }
 
+    h1 {
+      font-size: 1.5rem;
+      padding: 10px;
+      margin-bottom: 10px; /* Reduce la separación inferior del título */
+    }
+    
+    #contenedor {
+      margin-top: 10px; /* Reduce el espacio superior del contenedor de la imagen */
+    }
+
     #contenedor {
       margin-top: 20px;
       position: relative;
@@ -52,6 +62,15 @@
     #boton3 {
       right: 10%; /* Ajusta la posición horizontal del botón "Nah" */
     }
+    
+    /* CSS responsivo para pantallas pequeñas */
+    @media (max-width: 600px) {
+      .boton-cambio {
+        position: static; /* Quita la posición absoluta en móviles */
+        margin: 10px auto; /* Espacio entre botones y centrado automático */
+        display: block; /* Pone los botones uno debajo del otro */
+        width: 80%; /* Anchura del botón en relación al contenedor */
+      }
     
       #boton2, #boton3 {
         left: auto; /* Resetea la posición a la izquierda */
